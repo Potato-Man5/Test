@@ -1,0 +1,85 @@
+.calendar-page{
+    width:100%;
+    padding:40px 8%;
+    background:#f8fff4;
+}
+
+.calendar-container{
+    width:100%;
+    max-width:1400px;
+    margin:auto;
+}
+
+.calendar-section{
+    background:#fff;
+    padding:25px;
+    border-radius:15px;
+    margin-bottom:25px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    border-top:6px solid #fdd835;
+}
+
+.calendar-section h2{
+    color:#1b5e20;
+    margin-bottom:20px;
+}
+
+.calendar-button{
+    background:#fdd835;
+    color:#1b5e20;
+    font-weight:bold;
+    border:none;
+    border-radius:8px;
+    padding:12px 20px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.calendar-button:hover{
+    background:#fbc02d;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:12px;
+    margin-bottom:12px;
+    border:2px solid #c8e6c9;
+    border-radius:8px;
+}
+
+textarea{
+    resize:vertical;
+    min-height:120px;
+}
+
+.event-details{
+    margin-bottom:25px;
+    padding:20px;
+    background:#fffde7;
+    border-left:6px solid #fdd835;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.fc{
+    font-family:'Poppins',sans-serif;
+}
+
+.fc-toolbar-title{
+    color:#1b5e20;
+}
+
+.fc-button{
+    background:#2e7d32 !important;
+    border:none !important;
+}
+
+.fc-button:hover{
+    background:#1b5e20 !important;
+}
+
+.fc-daygrid-event{
+    background:#43a047 !important;
+    border:none !important;
+}

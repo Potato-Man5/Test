@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="images/Logos/SPCM_logo.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST. PAUL COLLEGE OF MAKATI</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/slidescrollimages.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/calendar.css">
+    <script src="js/slidescrollimages.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script type="module" src="js/calendar.js" defer></script>
+
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+            <img src="images/Logos/SPCM_logo.png" alt="St. Paul College of Makati Logo">
+            <a href="index.html">
+                <h2 class="spcmnav">St. Paul College of Makati, INC.</h2>
+            </a>
+        </div>
+
+        <div class="menu-toggle" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <ul class="navUL">
+            <li><a href="index.html">Home</a></li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">About SPCM &#9662;
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="about-spcm/History.html">History</a>
+                        <a href="about-spcm/The_School_Seal.html">The School Seal</a>
+                        <a href="about-spcm/Philosophy_Vision_Mission_Core_Values.html">Philosophy, Vision, Mission, and
+                            Core
+                            Values</a>
+                        <a href="about-spcm/Organizational_Structure.html">Organizational Structure</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">Curriculum &#9662;
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="academic-services/Academic_Services.html">Academic Services</a>
+                        <a href="academic-services/Student_Affairs.html">Student Affairs</a>
+                        <a href="academic-services/Homeroom_Guidance.html">Homeroom Guidance</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">Christian Formation &#9662;
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="christian-formation/Religous_Instruction.html">Religous Instruction</a>
+                        <a href="christian-formation/Campus_Ministry.html">Campus Ministry</a>
+                        <a href="christian-formation/Community_Engagement_Services.html">Community Engagement
+                            Services</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">Admissions &#9662;
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="admissions/Admission.html">Admission</a>
+                        <a href="admissions/Registration.html">Registration</a>
+                        <a href="admissions/Downloads.html">Downloads</a>
+                    </div>
+                </div>
+            </li>
+            <li><a href="SWORD.html">SWORD</a></li>
+            <li><a href="Calendar.html">Calendar</a></li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">Student Portals &#9662;
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="student-portals/Alumni.html">Alumni</a>
+                        <a href="student-portals/Helpful_Links.html">Helpful Links</a>
+                        <a href="student-portals/Student_Forums.html">Student Forums</a>
+                    </div>
+                </div>
+            </li>
+            <li><a href="Contact.html">Contact Us</a></li>
+        </ul>
+
+    </nav>
+
+    <div class="hero">
+
+        <div>
+
+            <h1>Welcome to St. Paul College of Makati</h1>
+
+            <p>Prayerful • Self-Effacing • Tranquil-Daring • All to All</p>
+
+            <button>Explore Our School</button>
+
+        </div>
+
+    </div>
+
+    <section class="carousel-wrapper">
+
+        <h2 class="carousel-title textgreen">Curriculum</h2>
+
+        <div class="slideshow-container">
+
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 4</div>
+                <img class="carouselimg" src="images/preschool.jpg" style="width:100%">
+                <div class="text">Early Years PLACEHOLDER: REDO IMAGES OUTDATED UNIFORMS</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 4</div>
+                <img class="carouselimg" src="images/gradeschool.jpg" style="width:100%">
+                <div class="text">Grade SchoolPLACEHOLDER: REDO IMAGES OUTDATED UNIFORMS</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 4</div>
+                <img class="carouselimg" src="images/highschool.jpg" style="width:100%">
+                <div class="text">High SchoolPLACEHOLDER: REDO IMAGES OUTDATED UNIFORMS</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">4 / 4</div>
+                <img class="carouselimg" src="images/seniorhighschool.jpg" style="width:100%">
+                <div class="text">Senior High School PLACEHOLDER: REDO IMAGES OUTDATED UNIFORMS</div>
+            </div>
+
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+
+        </div>
+        <br>
+
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+        </div>
+        <br>
+
+        <div>
+            <h3 class="maincaption textgreen">Shaping Paulinians Towards Compassionate Mission</h3>
+
+            <p class="mainp">St. Paul College of Makati, a Catholic Paulinian educational institution, believes that
+                every child can best learn
+                within a caring community, and endeavors to provide meaningful, relevant, and engaging learning
+                environment where the
+                potentials and gifts of the child are developed to the fullest towards the formation of an integrated,
+                Christ-centered,
+                and socially-responsive Paulinian.</p>
+        </div>
+
+        </div>
+
+    </section>
+
+    <section class="yellowbg">
+
+        <div>
+
+            <h1 class="maincaption textgreen">PROGRAM OFFERINGS</h1>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Early Years</h3>
+                    <img class="card-sisters-img" src="images/EarlyYears.jpg" alt="Early Years Program">
+                    <p>Our Preschool Program provides a nurturing, caring and God loving environment that promotes the
+                        development of a healthy self-concept and a positive self-esteem among children. </p>
+                </div>
+
+                <div class="card">
+                    <h3>Grade School</h3>
+                    <img class="card-sisters-img" src="images/GradeSchool-Program.jpg" alt="Grade School Program">
+                    <p>The Grade School Academic Program is a six - year program that aims to form Academically
+                        Excellent, Morally Upright, and Socially Responsible Paulinians. </p>
+                </div>
+
+                <div class="card">
+                    <h3>High School</h3>
+                    <img class="card-sisters-img" src="images/HighSchool-Program.jpg" alt="High School Program">
+                    <p>The Junior High School Program aims to form integrated Paulinians who are imbued with Christian
+                        Catholic values coupled with a solid grounding on the 21st century skills in their academic
+                        formation.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Senior High School</h3>
+                    <img class="card-sisters-img" src="images/SeniorHighSchool-Program.jpg"
+                        alt="Senior High School Program">
+                    <p>The Senior High School Program aims to hone and develop the interest and expertise of Paulinians
+                        in the various fields of study and prepare them to better tackle the rigors of college life and
+                        the world of work.</p>
+                </div>
+
+            </div>
+
+    </section>
+
+    <section>
+
+        <h2 class="title">Quick Access</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>👨‍🎓 Student Portal</h3>
+                <p>Access grades, attendance, and assignments.</p>
+            </div>
+
+            <div class="card">
+                <h3>👨‍🏫 Faculty Portal</h3>
+                <p>Teacher resources and classroom management.</p>
+            </div>
+
+            <div class="card">
+                <h3>📚 Library</h3>
+                <p>Browse books and digital learning resources.</p>
+            </div>
+
+            <div class="card">
+                <h3>💻 e-Learning</h3>
+                <p>Continue learning anytime, anywhere.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section>
+
+        <div class="message">
+
+            <img src="">
+
+            <div class="message-text">
+
+                <h2>Principal's Welcome</h2>
+
+                <p>
+
+                    Welcome to St. Paul College of Makati. We strive to nurture students through quality education,
+                    strong values, and innovative learning experiences. Together, we prepare our learners to become
+                    responsible leaders and compassionate members of society.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="events">
+
+        <h2 class="title">Upcoming Events</h2>
+
+    </section>
+
+    <section class="calendar-page">
+
+        <div class="calendar-container">
+
+            <div class="calendar-section">
+                <h2>School Calendar</h2>
+                <div id="calendar"></div>
+            </div>
+
+            <div class="event-details" id="detailsBox" style="display:none;">
+                <h3 id="detailsTitle"></h3>
+
+                <p>
+                    <strong>Date:</strong>
+                    <span id="detailsDate"></span>
+                </p>
+
+                <p id="detailsDescription"></p>
+            </div>
+
+            <div class="section" id="eventSection">
+
+                <h2>Add Event</h2>
+
+                <input type="text" id="eventTitle" placeholder="Event Title">
+
+                <input type="date" id="eventDate">
+
+                <textarea id="eventDescription" placeholder="Description">
+                </textarea>
+
+                <button class="calendar-button" onclick="addEvent()">
+                    Add Event
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="greenbg footersection">
+
+        <div class="leftfooter">
+            <h3 class="textyellow">ST. PAUL COLLEGE OF MAKATI</h3>
+            <p><b>Address:</b> D.M. Rivera St. Poblacion Makati City</p>
+
+            <p><b>Tel:</b> 896-8369 | 899-3256</p>
+
+            <p><b>For General Inquiry:</b> info@spcmakati.edu.ph</p>
+
+            <p><b>For Student Admission Inquiry:</b> guidancecenter@spcmakati.edu.ph</p>
+        </div>
+
+        <div class="rightfooter">
+            <h3 class="textyellow">GET CONNECTED</h3>
+            <a href="https://www.facebook.com/spcmakati.edu" target="_blank"><img src="images/Logos/facebook.png"
+                    alt="Facebook Logo" class="imgfooter"></a>
+            <a href="https://www.youtube.com/@StPaulCollegeofMakati" target="_blank"><img src="images/Logos/youtube.png"
+                    alt="YouTube Logo" class="imgfooter"></a>
+            <a href="mailto:info@spcmakati.edu.ph" target="_blank"><img src="images/Logos/email.png" alt="Email Logo"
+                    class="imgfooter"></a>
+        </div>
+
+        <div class="leftfooter">
+            <h3 class="textyellow">AFFILIATIONS</h3>
+            <a href="https://www.spcem.edu.ph/" target="_blank"><img src="images/Logos/affiliations/spcemlogo.jpg"
+                    alt="SPCEM Logo" class="imgfooterlogo"></a>
+            <a href="https://ceap.org.ph/" target="_blank"><img src="images/Logos/affiliations/ceaplogo.jpeg"
+                    alt="CEAP Logo" class="imgfooterlogo"></a>
+            <a href="https://peac.org.ph/" target="_blank"><img src="images/Logos/affiliations/peaclogo.jpeg"
+                    alt="PEAC Logo" class="imgfooterlogo2"></a>
+            <a href="https://paascu.org.ph/" target="_blank"><img src="images/Logos/affiliations/paasculogo.png"
+                    alt="PAASCU Logo" class="imgfooterlogo"></a>
+            <a href="none" target="_blank"><img src="images/Logos/affiliations/appmlogo.jpeg" alt="APPM Logo"
+                    class="imgfooterlogo"></a>
+        </div>
+
+    </section>
+
+    <footer>
+
+        © 2026 St. Paul College of Makati • All Rights Reserved
+
+    </footer>
+
+</body>
+
+</html>
