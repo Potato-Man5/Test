@@ -143,11 +143,11 @@ window.addEvent = function () {
 
 }
 
-window.logout = async function () {
+// window.logout = async function () {
 
-    await signOut(auth);
+//     await signOut(auth);
 
-    window.location.href =
-        "index.html";
+//     window.location.href =
+//         "index.html";
 
-}
+// }
