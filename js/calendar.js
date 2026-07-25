@@ -91,34 +91,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-onAuthStateChanged(auth, async (user) => {
+// onAuthStateChanged(auth, async (user) => {
 
-    if (!user) {
-        window.location.href = "index.html";
-        return;
-    }
+//     if (!user) {
+//         window.location.href = "index.html";
+//         return;
+//     }
 
-    const snapshot = await get(
-        ref(db, "users/" + user.uid)
-    );
+//     const snapshot = await get(
+//         ref(db, "users/" + user.uid)
+//     );
 
-    const userData = snapshot.val();
+//     const userData = snapshot.val();
 
-    console.log("User Data:", userData);
+//     console.log("User Data:", userData);
 
-    const role = userData?.role || "student";
+//     const role = userData?.role || "student";
 
-    document.getElementById("userStatus").textContent =
-        "Logged in as: " + role;
+//     document.getElementById("userStatus").textContent =
+//         "Logged in as: " + role;
 
-    // Hide everything first
-    document.getElementById("eventSection").style.display = "none";
+//     // Hide everything first
+//     document.getElementById("eventSection").style.display = "none";
 
-    // Show teacher-only sections
-    if (role === "teacher") {
-        document.getElementById("eventSection").style.display = "block";
-    }
-});
+//     // Show teacher-only sections
+//     if (role === "teacher") {
+//         document.getElementById("eventSection").style.display = "block";
+//     }
+// });
 
 window.addEvent = function () {
 
