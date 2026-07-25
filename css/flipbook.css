@@ -1,0 +1,179 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.flipbook-wrapper{
+    width:100%;
+    min-height:90vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+    padding:20px;
+}
+
+.book{
+
+    width:min(95vw,1300px);
+    height:min(88vh,900px);
+
+    display:flex;
+
+    background:white;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.25);
+
+}
+
+.page{
+
+    width:50%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    background:white;
+
+    transition:transform .6s ease,
+               opacity .3s ease;
+
+}
+
+.left{
+
+    transform-origin:right center;
+
+    border-right:1px solid #ddd;
+
+}
+
+.right{
+
+    transform-origin:left center;
+
+}
+
+.left.flip{
+
+    transform:rotateY(90deg);
+
+    opacity:0;
+
+}
+
+.right.flip{
+
+    transform:rotateY(-90deg);
+
+    opacity:0;
+
+}
+
+.buttonFlipbook{
+
+    width:60px;
+
+    height:60px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:26px;
+
+    background:#2f5f36;
+
+    color:white;
+
+    transition:.25s;
+
+}
+
+.buttonFlipbook:hover{
+
+    background:#23492a;
+
+    transform:scale(1.08);
+
+}
+
+.page-number{
+
+    text-align:center;
+
+    margin:15px;
+
+    font-size:22px;
+
+    font-weight:600;
+
+}
+
+@media(max-width:900px){
+
+    .book{
+
+        width:95vw;
+
+        height:70vh;
+
+    }
+
+    .buttonFlipbook{
+
+        width:48px;
+
+        height:48px;
+
+        font-size:20px;
+
+    }
+
+}
+
+@media(max-width:700px){
+
+    .book{
+
+        flex-direction:column;
+
+        width:90vw;
+
+        height:90vh;
+
+    }
+
+    .page{
+
+        width:100%;
+
+        height:50%;
+
+    }
+
+    .left{
+
+        border-right:none;
+
+        border-bottom:1px solid #ddd;
+
+        transform-origin:center bottom;
+
+    }
+
+    .right{
+
+        transform-origin:center top;
+
+    }
+
+}
