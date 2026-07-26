@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="../images/Logos/SPCM_logo.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST. PAUL COLLEGE OF MAKATI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/slidescrollimages.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/flipbook.css">
+    <script src="../js/slidescrollimages.js" defer></script>
+    <script src="../js/main.js" defer></script>
+
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+            <img src="../images/Logos/SPCM_logo.png" alt="St. Paul College of Makati Logo">
+            <a href="../index.html">
+                <h2 class="spcmnav">St. Paul College of Makati, INC.</h2>
+            </a>
+        </div>
+
+        <div class="menu-toggle" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <ul class="navUL">
+            <li><a href="../index.html">Home</a></li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">About SPCM &#9662;
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="../about-spcm/History.html">History</a>
+                        <a href="../about-spcm/The_School_Seal.html">The School Seal</a>
+                        <a href="../about-spcm/Philosophy_Vision_Mission_Core_Values.html">Philosophy, Vision, Mission,
+                            and
+                            Core
+                            Values</a>
+                        <a href="../about-spcm/Organizational_Structure.html">Organizational Structure</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">Curriculum &#9662;
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="../curriculum/Academic_Services.html">Academic Services</a>
+                        <a href="../curriculum/Student_Affairs.html">Student Affairs</a>
+                        <a href="../curriculum/Homeroom_Guidance.html">Homeroom Guidance</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">Christian Formation &#9662;
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="../christian-formation/Religous_Instruction.html">Religous Instruction</a>
+                        <a href="../christian-formation/Campus_Ministry.html">Campus Ministry</a>
+                        <a href="../christian-formation/Community_Engagement_Services.html">Community Engagement
+                            Services</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">Admissions &#9662;
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="../admissions/Admission.html">Admission</a>
+                        <a href="../admissions/Registration.html">Registration</a>
+                        <a href="../admissions/Downloads.html">Downloads</a>
+                    </div>
+                </div>
+            </li>
+            <li><a href="../SWORD.html">SWORD</a></li>
+            <li><a href="../Calendar.html">Calendar</a></li>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">Student Portals &#9662;
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="../student-portals/Alumni.html">Alumni</a>
+                        <a href="../student-portals/Helpful_Links.html">Helpful Links</a>
+                        <a href="../student-portals/Student_Forums.html">Student Forums</a>
+                    </div>
+                </div>
+            </li>
+            <li><a href="../Contact.html">Contact Us</a></li>
+        </ul>
+
+    </nav>
+
+    <section class="flipbook-wrapper" id="flipbookWrapper">
+
+        <!-- Toolbar: Zoom + Fullscreen -->
+        <div class="zoom-controls">
+            <button class="buttonZoom" id="zoomInBtn">+</button>
+            <button class="buttonZoom" id="zoomResetBtn" title="Reset Zoom">↺</button>
+            <button class="buttonZoom" id="zoomOutBtn">−</button>
+            <button class="buttonZoom" id="fullscreenBtn" title="Toggle Fullscreen">⛶</button>
+        </div>
+
+        <!-- Viewport for drag panning -->
+        <div class="book-viewport" id="viewport">
+            <!-- Inner wrapper handles both zoom scale and pan translations -->
+            <div id="zoomContainer" class="zoom-container">
+                <div id="book" class="book"></div>
+            </div>
+        </div>
+
+        <button class="buttonFlipbook" id="prevBtn">❮</button>
+        <button class="buttonFlipbook" id="nextBtn">❯</button>
+    </section>
+
+    <!-- Include StPageFlip library -->
+    <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.js"></script>
+
+    <script>
+        const TOTAL_PAGES = 76;
+
+        const soundPaths = [
+            "../sound/turn.mp3",
+            "../sound/turn2.mp3",
+            "../sound/turn3.mp3",
+            "../sound/turn4.mp3"
+        ];
+
+        const pageTurnSounds = soundPaths.map(path => {
+            const audio = new Audio(path);
+            audio.preload = "auto";
+            return audio;
+        });
+
+        function playRandomTurnSound() {
+            const randomIndex = Math.floor(Math.random() * pageTurnSounds.length);
+            const sound = pageTurnSounds[randomIndex];
+            sound.currentTime = 0;
+            sound.play().catch(error => console.warn("Audio blocked:", error));
+        }
+
+        let currentScale = 1;
+        let translateX = 0;
+        let translateY = 0;
+        const SCALE_STEP = 0.25;
+        const MIN_SCALE = 1;
+        const MAX_SCALE = 3.5;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const bookContainer = document.getElementById("book");
+            const zoomContainer = document.getElementById("zoomContainer");
+            const viewport = document.getElementById("viewport");
+            const flipbookWrapper = document.getElementById("flipbookWrapper");
+
+            // 1. Generate Pages
+            for (let i = 1; i <= TOTAL_PAGES; i++) {
+                const pageDiv = document.createElement("div");
+                pageDiv.className = "my-page";
+
+                const img = document.createElement("img");
+                img.src = `../sword/CCOM_E-BOOK/${i}.png`;
+                img.alt = `Page ${i}`;
+
+                pageDiv.appendChild(img);
+                bookContainer.appendChild(pageDiv);
+            }
+
+            // Dynamic Sizing Calculation Logic
+            function getBookDimensions() {
+                const isFullscreen = !!document.fullscreenElement;
+                const isMobile = window.innerWidth <= 768;
+
+                let availableHeight;
+                let availableWidth;
+
+                if (isFullscreen) {
+                    availableHeight = window.innerHeight - 20;
+                    availableWidth = window.innerWidth - (isMobile ? 20 : 140);
+                } else if (isMobile) {
+                    // Reserve responsive space on mobile screens
+                    availableHeight = window.innerHeight * 0.75;
+                    availableWidth = window.innerWidth - 24;
+                } else {
+                    availableHeight = window.innerHeight * 0.82;
+                    availableWidth = window.innerWidth - 180;
+                }
+
+                // Standard portrait magazine page aspect ratio (Height / Width)
+                const aspect = 1.41;
+
+                const isPortraitMode = isMobile && !isFullscreen;
+
+                let targetHeight = availableHeight;
+                let singlePageWidth = targetHeight / aspect;
+
+                const maxAllowedWidth = isPortraitMode ? availableWidth : availableWidth / 2;
+
+                // Scale by width if height calculation exceeds screen boundaries
+                if (singlePageWidth > maxAllowedWidth) {
+                    singlePageWidth = maxAllowedWidth;
+                    targetHeight = singlePageWidth * aspect;
+                }
+
+                return {
+                    width: Math.round(singlePageWidth),
+                    height: Math.round(targetHeight)
+                };
+            }
+
+            let dims = getBookDimensions();
+            const isMobileInitial = window.innerWidth <= 768;
+
+            // 2. Initialize PageFlip
+            const pageFlip = new St.PageFlip(bookContainer, {
+                width: dims.width,
+                height: dims.height,
+                size: "fixed",
+                minWidth: 150,
+                maxWidth: 2500,
+                minHeight: 200,
+                maxHeight: 3500,
+                maxShadowOpacity: 0.4,
+                showCover: true,
+                usePortrait: isMobileInitial,
+                startPage: 0,
+                mobileScrollSupport: false,
+                hoverPage: false,
+                useMouseEvents: false,
+                clickEventForward: false
+            });
+
+            pageFlip.loadFromHTML(document.querySelectorAll(".my-page"));
+
+            pageFlip.on("flip", () => {
+                bookContainer.style.margin = "0 auto";
+                playRandomTurnSound();
+            });
+
+            function handleResize() {
+                const isMobileNow = window.innerWidth <= 768;
+                const newDims = getBookDimensions();
+
+                pageFlip.updateFromSettings({
+                    width: newDims.width,
+                    height: newDims.height,
+                    usePortrait: isMobileNow
+                });
+
+                applyZoom(1);
+            }
+
+            window.addEventListener("resize", handleResize);
+
+            // 3. ZOOM & PAN HANDLERS
+            function updateTransform() {
+                if (currentScale === 1) {
+                    translateX = 0;
+                    translateY = 0;
+                }
+                zoomContainer.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+            }
+
+            function applyZoom(scale) {
+                currentScale = Math.min(Math.max(scale, MIN_SCALE), MAX_SCALE);
+                updateTransform();
+            }
+
+            document.getElementById("zoomInBtn").addEventListener("click", () => applyZoom(currentScale + SCALE_STEP));
+            document.getElementById("zoomOutBtn").addEventListener("click", () => applyZoom(currentScale - SCALE_STEP));
+            document.getElementById("zoomResetBtn").addEventListener("click", () => applyZoom(1));
+
+            viewport.addEventListener("wheel", (e) => {
+                e.preventDefault();
+                applyZoom(e.deltaY < 0 ? currentScale + SCALE_STEP : currentScale - SCALE_STEP);
+            }, { passive: false });
+
+            // Touch & Pinch Logic
+            let isDragging = false;
+            let startX = 0, startY = 0, startTransX = 0, startTransY = 0;
+            let initialPinchDistance = null;
+
+            function getDistance(touches) {
+                const dx = touches[0].clientX - touches[1].clientX;
+                const dy = touches[0].clientY - touches[1].clientY;
+                return Math.hypot(dx, dy);
+            }
+
+            viewport.addEventListener("touchstart", (e) => {
+                if (e.touches.length === 2) {
+                    // Pinch initialization
+                    isDragging = false;
+                    initialPinchDistance = getDistance(e.touches);
+                } else if (e.touches.length === 1 && currentScale > 1) {
+                    // Single finger panning initialization
+                    isDragging = true;
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                    startTransX = translateX;
+                    startTransY = translateY;
+                }
+            }, { passive: false });
+
+            viewport.addEventListener("touchmove", (e) => {
+                if (e.touches.length === 2 && initialPinchDistance) {
+                    // Pinch Zooming
+                    e.preventDefault();
+                    const currentDistance = getDistance(e.touches);
+                    const factor = currentDistance / initialPinchDistance;
+
+                    applyZoom(currentScale * factor);
+                    initialPinchDistance = currentDistance;
+                } else if (e.touches.length === 1 && isDragging && currentScale > 1) {
+                    // Single finger panning
+                    e.preventDefault();
+                    translateX = startTransX + (e.touches[0].clientX - startX);
+                    translateY = startTransY + (e.touches[0].clientY - startY);
+                    updateTransform();
+                }
+            }, { passive: false });
+
+            viewport.addEventListener("touchend", (e) => {
+                if (e.touches.length < 2) {
+                    initialPinchDistance = null;
+                }
+                if (e.touches.length === 0) {
+                    isDragging = false;
+                }
+            });
+
+            // Mouse Pan logic
+            viewport.addEventListener("mousedown", (e) => {
+                if (currentScale <= 1) return;
+                isDragging = true;
+                viewport.classList.add("grabbing");
+                startX = e.clientX;
+                startY = e.clientY;
+                startTransX = translateX;
+                startTransY = translateY;
+            });
+
+            window.addEventListener("mouseup", () => {
+                isDragging = false;
+                viewport.classList.remove("grabbing");
+            });
+
+            viewport.addEventListener("mousemove", (e) => {
+                if (!isDragging || currentScale <= 1) return;
+                e.preventDefault();
+                translateX = startTransX + (e.clientX - startX);
+                translateY = startTransY + (e.clientY - startY);
+                updateTransform();
+            });
+
+            // 4. FULLSCREEN CONTROLS
+            const fullscreenBtn = document.getElementById("fullscreenBtn");
+            fullscreenBtn.addEventListener("click", () => {
+                if (!document.fullscreenElement) {
+                    if (flipbookWrapper.requestFullscreen) flipbookWrapper.requestFullscreen();
+                    else if (flipbookWrapper.webkitRequestFullscreen) flipbookWrapper.webkitRequestFullscreen();
+                } else {
+                    if (document.exitFullscreen) document.exitFullscreen();
+                }
+            });
+
+            document.addEventListener("fullscreenchange", () => {
+                setTimeout(handleResize, 100);
+            });
+
+            // 5. NAVIGATION CONTROLS
+            document.getElementById("nextBtn").addEventListener("click", () => pageFlip.flipNext());
+            document.getElementById("prevBtn").addEventListener("click", () => pageFlip.flipPrev());
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowRight") pageFlip.flipNext();
+                if (e.key === "ArrowLeft") pageFlip.flipPrev();
+            });
+        });
+    </script>
+</body>
+
+</html>
