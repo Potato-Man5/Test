@@ -94,17 +94,21 @@
 
 /* Page Rendering */
 .my-page {
-    background-color: white;
+    /* Match container background or keep standard clean white background */
+    background-color: #ffffff;
     width: 100%;
     height: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
 }
 
 .my-page img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    /* Prevents page text from ever being cropped/cut off */
+    object-fit: contain; 
     object-position: center center;
     display: block;
 }
@@ -136,19 +140,19 @@
     .flipbook-wrapper {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-        padding-top: 55px;
-        /* Leave space for zoom controls at top */
-        height: 100vh;
+        padding-top: 60px;
+        min-height: 100vh;
         gap: 10px;
     }
 
     .book-viewport {
         width: 100%;
-        flex: 1;
-        /* Automatically takes remaining vertical space */
-        max-height: 70vh;
+        height: 78vh; /* Matches our JS vertical target space */
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .buttonFlipbook {
@@ -156,14 +160,12 @@
         height: 48px;
         min-width: 48px;
         font-size: 18px;
-        margin-bottom: 10px;
     }
 
     .zoom-controls {
-        top: 10px;
+        top: 12px;
         right: 50%;
         transform: translateX(50%);
-        /* Centered controls on mobile top bar */
     }
 
     .buttonZoom {

@@ -193,28 +193,33 @@
                     availableHeight = window.innerHeight - 20;
                     availableWidth = window.innerWidth - (isMobile ? 20 : 140);
                 } else if (isMobile) {
-                    // Reserve dynamic space for mobile UI
-                    availableHeight = viewport.clientHeight || window.innerHeight * 0.65;
-                    availableWidth = viewport.clientWidth || window.innerWidth - 20;
+                    // Reserve responsive space on mobile screens
+                    availableHeight = window.innerHeight * 0.75;
+                    availableWidth = window.innerWidth - 24;
                 } else {
                     availableHeight = window.innerHeight * 0.82;
                     availableWidth = window.innerWidth - 180;
                 }
 
-                const aspect = 1.41; // Height-to-width ratio per single page
-                let singlePageWidth = availableHeight / aspect;
+                // Standard portrait magazine page aspect ratio (Height / Width)
+                const aspect = 1.41;
 
                 const isPortraitMode = isMobile && !isFullscreen;
-                const totalBookWidth = isPortraitMode ? singlePageWidth : singlePageWidth * 2;
 
-                if (totalBookWidth > availableWidth) {
-                    singlePageWidth = isPortraitMode ? availableWidth : availableWidth / 2;
-                    availableHeight = singlePageWidth * aspect;
+                let targetHeight = availableHeight;
+                let singlePageWidth = targetHeight / aspect;
+
+                const maxAllowedWidth = isPortraitMode ? availableWidth : availableWidth / 2;
+
+                // Scale by width if height calculation exceeds screen boundaries
+                if (singlePageWidth > maxAllowedWidth) {
+                    singlePageWidth = maxAllowedWidth;
+                    targetHeight = singlePageWidth * aspect;
                 }
 
                 return {
                     width: Math.round(singlePageWidth),
-                    height: Math.round(availableHeight)
+                    height: Math.round(targetHeight)
                 };
             }
 
