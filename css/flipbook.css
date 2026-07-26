@@ -4,24 +4,7 @@
     box-sizing: border-box;
 }
 
-/* Block hover and drag events on all page containers */
-.stpageflip--container,
-.stpageflip--wrapper,
-.stpageflip--item,
-.stpageflip--page,
-.stpageflip--userPage {
-    pointer-events: none !important;
-    user-select: none !important;
-}
-
-/* Ensure the outer book and control buttons stay fully clickable */
-.flipbook-wrapper,
-.zoom-controls,
-.buttonFlipbook,
-.buttonZoom {
-    pointer-events: auto !important;
-}
-
+/* Base Outer Layout */
 .flipbook-wrapper {
     position: relative;
     width: 100%;
@@ -29,21 +12,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px; /* Adjust gap to bring elements closer together */
-    padding: 10px;
+    gap: 15px;
+    padding: 20px;
     background: #f4f4f4;
 }
 
-/* Fullscreen mode background styling */
+/* Fullscreen Overlay Styling */
 .flipbook-wrapper:fullscreen {
-    width: 100vw;
-    height: 100vh;
+    width: 100vw !important;
+    height: 100vh !important;
     background: #111;
-    /* Dark backdrop in full screen */
-    padding: 0;
+    padding: 10px !important;
+    margin: 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    overflow: hidden;
 }
 
-/* Toolbar */
+/* Floating Toolbar */
 .zoom-controls {
     position: absolute;
     top: 20px;
@@ -72,11 +60,8 @@
     transform: scale(1.05);
 }
 
-/* Viewport for Panning */
+/* Viewport & Zoom Container */
 .book-viewport {
-    width: auto;             /* Changed from 100% so it shrinks to the book's width */
-    max-width: 95vw;
-    height: 85vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -86,16 +71,10 @@
     user-select: none;
 }
 
-.flipbook-wrapper:fullscreen .book-viewport {
-    max-width: 100vw;
-    height: 100vh;
-}
-
 .book-viewport.grabbing {
     cursor: grabbing !important;
 }
 
-/* Zoom Container handles scale & drag offsets */
 .zoom-container {
     display: flex;
     justify-content: center;
@@ -105,33 +84,15 @@
     will-change: transform;
 }
 
-/* Book Base Locks */
+/* Flipbook Core Canvas Element */
 .book {
-    box-shadow: 0 20px 45px rgba(0, 0, 0, .25);
-    border-radius: 8px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, .3);
+    border-radius: 6px;
     background: #fff;
     margin: 0 auto !important;
-    top: 0 !important;
-    position: relative !important;
 }
 
-.stpageflip--container,
-.stpageflip--wrapper,
-.stpageflip--item,
-.stpageflip--page,
-.stpageflip--userPage {
-    pointer-events: none !important;
-    margin: 0 auto !important;
-    top: 0 !important;
-    left: 0 !important;
-    transform: translateY(0) !important;
-}
-
-.buttonFlipbook,
-.buttonZoom {
-    pointer-events: auto !important;
-}
-
+/* Page Rendering */
 .my-page {
     background-color: white;
     width: 100%;
@@ -144,30 +105,25 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    object-position: center center;
     display: block;
 }
 
-.stpageflip--left img,
-.my-page:nth-child(odd) img {
-    object-position: right center;
-}
-
-.stpageflip--right img,
-.my-page:nth-child(even) img {
-    object-position: left center;
-}
-
+/* Navigation Buttons Adjacent to the Viewport */
 .buttonFlipbook {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 26px;
+    font-size: 24px;
     background: #2f5f36;
     color: white;
-    transition: .25s;
-    z-index: 100;
+    transition: 0.25s;
+    z-index: 1000;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .buttonFlipbook:hover {
@@ -175,74 +131,53 @@
     transform: scale(1.08);
 }
 
-.page-number {
+/* Mobile Responsive Setup */
+@media (max-width: 768px) {
+    .flipbook-wrapper {
+        display: grid;
+        grid-template-rows: 1fr auto;
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+        align-items: center;
+        padding-top: 65px;
+        min-height: 100vh;
+        gap: 15px;
+    }
 
-    text-align: center;
-
-    margin: 15px;
-
-    font-size: 22px;
-
-    font-weight: 600;
-
-}
-
-@media(max-width:900px) {
-
-    .book {
-
-        width: 95vw;
-
-        height: 70vh;
-
+    .book-viewport {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        width: 100vw;
+        height: 60vh;
     }
 
     .buttonFlipbook {
-
-        width: 48px;
-
-        height: 48px;
-
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
         font-size: 20px;
-
     }
 
-}
-
-@media(max-width:700px) {
-
-    .book {
-
-        flex-direction: column;
-
-        width: 90vw;
-
-        height: 90vh;
-
+    #prevBtn {
+        grid-column: 1;
+        grid-row: 2;
+        margin-bottom: 20px;
     }
 
-    .page {
-
-        width: 100%;
-
-        height: 50%;
-
+    #nextBtn {
+        grid-column: 2;
+        grid-row: 2;
+        margin-bottom: 20px;
     }
 
-    .left {
-
-        border-right: none;
-
-        border-bottom: 1px solid #ddd;
-
-        transform-origin: center bottom;
-
+    .zoom-controls {
+        top: 10px;
+        right: 15px;
     }
 
-    .right {
-
-        transform-origin: center top;
-
+    .buttonZoom {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
     }
-
 }

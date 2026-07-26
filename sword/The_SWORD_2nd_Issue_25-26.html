@@ -135,7 +135,6 @@
     <script>
         const TOTAL_PAGES = 40;
 
-        // Array of page-turn sound paths
         const soundPaths = [
             "../sound/turn.mp3",
             "../sound/turn2.mp3",
@@ -143,27 +142,19 @@
             "../sound/turn4.mp3"
         ];
 
-        // Preload audio objects for lower latency playback
         const pageTurnSounds = soundPaths.map(path => {
             const audio = new Audio(path);
             audio.preload = "auto";
             return audio;
         });
 
-        // Helper function to play a random sound from the array
         function playRandomTurnSound() {
             const randomIndex = Math.floor(Math.random() * pageTurnSounds.length);
             const sound = pageTurnSounds[randomIndex];
-
-            // Reset playback position if triggered in rapid succession
             sound.currentTime = 0;
-            sound.play().catch(error => {
-                // Browsers block autoplay until the user interacts with the page
-                console.warn("Audio playback failed or was blocked by browser:", error);
-            });
+            sound.play().catch(error => console.warn("Audio blocked:", error));
         }
 
-        // Zoom and Pan State
         let currentScale = 1;
         let translateX = 0;
         let translateY = 0;
@@ -177,7 +168,7 @@
             const viewport = document.getElementById("viewport");
             const flipbookWrapper = document.getElementById("flipbookWrapper");
 
-            // 1. Generate HTML Pages Dynamically
+            // 1. Generate Pages
             for (let i = 1; i <= TOTAL_PAGES; i++) {
                 const pageDiv = document.createElement("div");
                 pageDiv.className = "my-page";
@@ -190,29 +181,63 @@
                 bookContainer.appendChild(pageDiv);
             }
 
-            // Function to calculate exact single page proportions
+            // Dynamic Sizing Calculation Logic
+            // 1. Updated Dynamic Sizing Logic
             function getBookDimensions() {
                 const isFullscreen = !!document.fullscreenElement;
-                const availableHeight = isFullscreen ? window.innerHeight * 0.92 : window.innerHeight * 0.78;
-                const targetHeight = Math.min(availableHeight, isFullscreen ? 1100 : 850);
-                const singlePageWidth = targetHeight / 1.41;
-                return { width: singlePageWidth, height: targetHeight };
+                const isMobile = window.innerWidth <= 768;
+
+                let availableHeight;
+                let availableWidth;
+
+                if (isFullscreen) {
+                    // Use nearly the full height of the viewport
+                    availableHeight = window.innerHeight - 20;
+                    // Account for navigation buttons on left and right (~140px total reserved)
+                    availableWidth = window.innerWidth - (isMobile ? 20 : 140);
+                } else if (isMobile) {
+                    availableHeight = window.innerHeight * 0.65;
+                    availableWidth = window.innerWidth - 30;
+                } else {
+                    availableHeight = window.innerHeight * 0.82;
+                    availableWidth = window.innerWidth - 180;
+                }
+
+                const aspect = 1.41; // Height-to-width ratio per single page
+                let targetHeight = availableHeight;
+                let singlePageWidth = targetHeight / aspect;
+
+                // In double-page mode (desktop/fullscreen non-mobile), ensure 2 pages fit in available width
+                const isPortraitMode = isMobile && !isFullscreen;
+                const totalBookWidth = isPortraitMode ? singlePageWidth : singlePageWidth * 2;
+
+                if (totalBookWidth > availableWidth) {
+                    singlePageWidth = isPortraitMode ? availableWidth : availableWidth / 2;
+                    targetHeight = singlePageWidth * aspect;
+                }
+
+                return {
+                    width: Math.round(singlePageWidth),
+                    height: Math.round(targetHeight)
+                };
             }
 
             let dims = getBookDimensions();
+            const isMobileInitial = window.innerWidth <= 768;
 
-            // 2. Initialize StPageFlip
+            // 2. Updated PageFlip initialization with higher maximums
             const pageFlip = new St.PageFlip(bookContainer, {
                 width: dims.width,
                 height: dims.height,
                 size: "fixed",
-                minWidth: 250,
-                maxWidth: 800,
-                minHeight: 350,
-                maxHeight: 1200,
+                minWidth: 150,
+                maxWidth: 2500,  // Increased from 1000 to support high-res displays
+                minHeight: 200,
+                maxHeight: 3500,  // Increased from 1400
                 maxShadowOpacity: 0.4,
-                showCover: false,
-                usePortrait: false,
+                showCover: true,
+                usePortrait: isMobileInitial,
+                startPage: 0,
                 mobileScrollSupport: false,
                 hoverPage: false,
                 useMouseEvents: false,
@@ -221,13 +246,27 @@
 
             pageFlip.loadFromHTML(document.querySelectorAll(".my-page"));
 
-            // Play random sound and re-center margin whenever a page is flipped
             pageFlip.on("flip", () => {
                 bookContainer.style.margin = "0 auto";
                 playRandomTurnSound();
             });
 
-            // 3. ZOOM & PAN FUNCTIONS
+            function handleResize() {
+                const isMobileNow = window.innerWidth <= 768;
+                const newDims = getBookDimensions();
+
+                pageFlip.updateFromSettings({
+                    width: newDims.width,
+                    height: newDims.height,
+                    usePortrait: isMobileNow
+                });
+
+                applyZoom(1);
+            }
+
+            window.addEventListener("resize", handleResize);
+
+            // 3. ZOOM & PAN HANDLERS
             function updateTransform() {
                 if (currentScale === 1) {
                     translateX = 0;
@@ -241,38 +280,25 @@
                 updateTransform();
             }
 
-            document.getElementById("zoomInBtn").addEventListener("click", () => {
-                applyZoom(currentScale + SCALE_STEP);
-            });
+            document.getElementById("zoomInBtn").addEventListener("click", () => applyZoom(currentScale + SCALE_STEP));
+            document.getElementById("zoomOutBtn").addEventListener("click", () => applyZoom(currentScale - SCALE_STEP));
+            document.getElementById("zoomResetBtn").addEventListener("click", () => applyZoom(1));
 
-            document.getElementById("zoomOutBtn").addEventListener("click", () => {
-                applyZoom(currentScale - SCALE_STEP);
-            });
-
-            document.getElementById("zoomResetBtn").addEventListener("click", () => {
-                applyZoom(1);
-            });
-
-            // Mouse Wheel Zooming
             viewport.addEventListener("wheel", (e) => {
                 e.preventDefault();
-                if (e.deltaY < 0) {
-                    applyZoom(currentScale + SCALE_STEP);
-                } else {
-                    applyZoom(currentScale - SCALE_STEP);
-                }
+                applyZoom(e.deltaY < 0 ? currentScale + SCALE_STEP : currentScale - SCALE_STEP);
             }, { passive: false });
 
-            // 4. CLICK & DRAG PANNING (Mouse Movement)
+            // Panning/Dragging logic
             let isDragging = false;
-            let startMouseX, startMouseY, startTransX, startTransY;
+            let startX, startY, startTransX, startTransY;
 
             viewport.addEventListener("mousedown", (e) => {
-                if (currentScale <= 1) return; // Only pan when zoomed in
+                if (currentScale <= 1) return;
                 isDragging = true;
                 viewport.classList.add("grabbing");
-                startMouseX = e.clientX;
-                startMouseY = e.clientY;
+                startX = e.clientX;
+                startY = e.clientY;
                 startTransX = translateX;
                 startTransY = translateY;
             });
@@ -285,49 +311,47 @@
             viewport.addEventListener("mousemove", (e) => {
                 if (!isDragging || currentScale <= 1) return;
                 e.preventDefault();
-                const deltaX = e.clientX - startMouseX;
-                const deltaY = e.clientY - startMouseY;
-
-                translateX = startTransX + deltaX;
-                translateY = startTransY + deltaY;
+                translateX = startTransX + (e.clientX - startX);
+                translateY = startTransY + (e.clientY - startY);
                 updateTransform();
             });
 
-            // 5. FULLSCREEN FUNCTIONALITY WITH RESIZING
-            const fullscreenBtn = document.getElementById("fullscreenBtn");
+            viewport.addEventListener("touchstart", (e) => {
+                if (currentScale <= 1 || e.touches.length !== 1) return;
+                isDragging = true;
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                startTransX = translateX;
+                startTransY = translateY;
+            });
 
+            viewport.addEventListener("touchend", () => isDragging = false);
+
+            viewport.addEventListener("touchmove", (e) => {
+                if (!isDragging || currentScale <= 1 || e.touches.length !== 1) return;
+                translateX = startTransX + (e.touches[0].clientX - startX);
+                translateY = startTransY + (e.touches[0].clientY - startY);
+                updateTransform();
+            });
+
+            // 4. FULLSCREEN CONTROLS
+            const fullscreenBtn = document.getElementById("fullscreenBtn");
             fullscreenBtn.addEventListener("click", () => {
                 if (!document.fullscreenElement) {
-                    if (flipbookWrapper.requestFullscreen) {
-                        flipbookWrapper.requestFullscreen();
-                    } else if (flipbookWrapper.webkitRequestFullscreen) {
-                        flipbookWrapper.webkitRequestFullscreen();
-                    }
+                    if (flipbookWrapper.requestFullscreen) flipbookWrapper.requestFullscreen();
+                    else if (flipbookWrapper.webkitRequestFullscreen) flipbookWrapper.webkitRequestFullscreen();
                 } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    }
+                    if (document.exitFullscreen) document.exitFullscreen();
                 }
             });
 
-            // Recalculate book proportions when toggling Fullscreen mode
             document.addEventListener("fullscreenchange", () => {
-                const newDims = getBookDimensions();
-                pageFlip.updateFromSettings({
-                    width: newDims.width,
-                    height: newDims.height
-                });
-                applyZoom(1); // Reset zoom on screen state change
+                setTimeout(handleResize, 100);
             });
 
-            // 6. NAVIGATION CONTROLS
-            document.getElementById("nextBtn").addEventListener("click", () => {
-                pageFlip.flipNext();
-            });
-
-            document.getElementById("prevBtn").addEventListener("click", () => {
-                pageFlip.flipPrev();
-            });
+            // 5. NAVIGATION CONTROLS
+            document.getElementById("nextBtn").addEventListener("click", () => pageFlip.flipNext());
+            document.getElementById("prevBtn").addEventListener("click", () => pageFlip.flipPrev());
 
             document.addEventListener("keydown", (e) => {
                 if (e.key === "ArrowRight") pageFlip.flipNext();
