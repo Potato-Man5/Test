@@ -182,7 +182,6 @@
             }
 
             // Dynamic Sizing Calculation Logic
-            // 1. Updated Dynamic Sizing Logic
             function getBookDimensions() {
                 const isFullscreen = !!document.fullscreenElement;
                 const isMobile = window.innerWidth <= 768;
@@ -191,49 +190,46 @@
                 let availableWidth;
 
                 if (isFullscreen) {
-                    // Use nearly the full height of the viewport
                     availableHeight = window.innerHeight - 20;
-                    // Account for navigation buttons on left and right (~140px total reserved)
                     availableWidth = window.innerWidth - (isMobile ? 20 : 140);
                 } else if (isMobile) {
-                    availableHeight = window.innerHeight * 0.65;
-                    availableWidth = window.innerWidth - 30;
+                    // Reserve dynamic space for mobile UI
+                    availableHeight = viewport.clientHeight || window.innerHeight * 0.65;
+                    availableWidth = viewport.clientWidth || window.innerWidth - 20;
                 } else {
                     availableHeight = window.innerHeight * 0.82;
                     availableWidth = window.innerWidth - 180;
                 }
 
                 const aspect = 1.41; // Height-to-width ratio per single page
-                let targetHeight = availableHeight;
-                let singlePageWidth = targetHeight / aspect;
+                let singlePageWidth = availableHeight / aspect;
 
-                // In double-page mode (desktop/fullscreen non-mobile), ensure 2 pages fit in available width
                 const isPortraitMode = isMobile && !isFullscreen;
                 const totalBookWidth = isPortraitMode ? singlePageWidth : singlePageWidth * 2;
 
                 if (totalBookWidth > availableWidth) {
                     singlePageWidth = isPortraitMode ? availableWidth : availableWidth / 2;
-                    targetHeight = singlePageWidth * aspect;
+                    availableHeight = singlePageWidth * aspect;
                 }
 
                 return {
                     width: Math.round(singlePageWidth),
-                    height: Math.round(targetHeight)
+                    height: Math.round(availableHeight)
                 };
             }
 
             let dims = getBookDimensions();
             const isMobileInitial = window.innerWidth <= 768;
 
-            // 2. Updated PageFlip initialization with higher maximums
+            // 2. Initialize PageFlip
             const pageFlip = new St.PageFlip(bookContainer, {
                 width: dims.width,
                 height: dims.height,
                 size: "fixed",
                 minWidth: 150,
-                maxWidth: 2500,  // Increased from 1000 to support high-res displays
+                maxWidth: 2500,
                 minHeight: 200,
-                maxHeight: 3500,  // Increased from 1400
+                maxHeight: 3500,
                 maxShadowOpacity: 0.4,
                 showCover: true,
                 usePortrait: isMobileInitial,
@@ -289,10 +285,60 @@
                 applyZoom(e.deltaY < 0 ? currentScale + SCALE_STEP : currentScale - SCALE_STEP);
             }, { passive: false });
 
-            // Panning/Dragging logic
+            // Touch & Pinch Logic
             let isDragging = false;
-            let startX, startY, startTransX, startTransY;
+            let startX = 0, startY = 0, startTransX = 0, startTransY = 0;
+            let initialPinchDistance = null;
 
+            function getDistance(touches) {
+                const dx = touches[0].clientX - touches[1].clientX;
+                const dy = touches[0].clientY - touches[1].clientY;
+                return Math.hypot(dx, dy);
+            }
+
+            viewport.addEventListener("touchstart", (e) => {
+                if (e.touches.length === 2) {
+                    // Pinch initialization
+                    isDragging = false;
+                    initialPinchDistance = getDistance(e.touches);
+                } else if (e.touches.length === 1 && currentScale > 1) {
+                    // Single finger panning initialization
+                    isDragging = true;
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                    startTransX = translateX;
+                    startTransY = translateY;
+                }
+            }, { passive: false });
+
+            viewport.addEventListener("touchmove", (e) => {
+                if (e.touches.length === 2 && initialPinchDistance) {
+                    // Pinch Zooming
+                    e.preventDefault();
+                    const currentDistance = getDistance(e.touches);
+                    const factor = currentDistance / initialPinchDistance;
+
+                    applyZoom(currentScale * factor);
+                    initialPinchDistance = currentDistance;
+                } else if (e.touches.length === 1 && isDragging && currentScale > 1) {
+                    // Single finger panning
+                    e.preventDefault();
+                    translateX = startTransX + (e.touches[0].clientX - startX);
+                    translateY = startTransY + (e.touches[0].clientY - startY);
+                    updateTransform();
+                }
+            }, { passive: false });
+
+            viewport.addEventListener("touchend", (e) => {
+                if (e.touches.length < 2) {
+                    initialPinchDistance = null;
+                }
+                if (e.touches.length === 0) {
+                    isDragging = false;
+                }
+            });
+
+            // Mouse Pan logic
             viewport.addEventListener("mousedown", (e) => {
                 if (currentScale <= 1) return;
                 isDragging = true;
@@ -313,24 +359,6 @@
                 e.preventDefault();
                 translateX = startTransX + (e.clientX - startX);
                 translateY = startTransY + (e.clientY - startY);
-                updateTransform();
-            });
-
-            viewport.addEventListener("touchstart", (e) => {
-                if (currentScale <= 1 || e.touches.length !== 1) return;
-                isDragging = true;
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-                startTransX = translateX;
-                startTransY = translateY;
-            });
-
-            viewport.addEventListener("touchend", () => isDragging = false);
-
-            viewport.addEventListener("touchmove", (e) => {
-                if (!isDragging || currentScale <= 1 || e.touches.length !== 1) return;
-                translateX = startTransX + (e.touches[0].clientX - startX);
-                translateY = startTransY + (e.touches[0].clientY - startY);
                 updateTransform();
             });
 
