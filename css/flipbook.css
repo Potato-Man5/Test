@@ -135,6 +135,67 @@
     transform: scale(1.08);
 }
 
+/* Page Jump Controls Container */
+.page-jump-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #2f5f36;
+    padding: 3px 6px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Page Input Style */
+#pageInput {
+    width: 45px;
+    height: 32px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    background: #ffffff;
+    color: #333;
+}
+
+/* Hide number input spinner arrows across browsers */
+#pageInput::-webkit-outer-spin-button,
+#pageInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+#pageInput[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Go Button Style */
+.buttonJump {
+    height: 32px;
+    padding: 0 8px;
+    border: none;
+    border-radius: 4px;
+    background: #1e3d23;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.buttonJump:hover {
+    background: #152b19;
+}
+
+/* Disabled state */
+#pageInput:disabled,
+.buttonJump:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 /* Mobile Responsive Setup */
 @media (max-width: 768px) {
     .flipbook-wrapper {
