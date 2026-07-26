@@ -177,11 +177,11 @@
 
     #prevBtn {
         grid-column: 1 !important; /* Bottom Left */
-        justify-self: center;
+        /* justify-self: center; */
     }
 
     #nextBtn {
         grid-column: 2 !important; /* Bottom Right */
-        justify-self: center;
+        /* justify-self: center; */
     }
 }
