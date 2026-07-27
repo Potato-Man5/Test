@@ -40,7 +40,7 @@ nav {
 }
 
 .logo h2 {
-    font-family: 'Times New Roman', Times, serif !important;
+    font-family: "Old English Text MT", "Gothic", serif !important;
     font-size: 20px !important;
 }
 
@@ -59,6 +59,65 @@ nav a {
 
 nav a:hover {
     color: #ffd54f;
+}
+
+/* Make dropdown position relative */
+.dropdown-content {
+    position: absolute;
+    background: white;
+    min-width: 230px;
+    display: none;
+    z-index: 1000;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Sub Dropdown */
+
+.sub-dropdown {
+    position: relative;
+}
+
+.sub-dropbtn {
+    width: 100%;
+    border: none;
+    background: white;
+    color: #2f5f36;
+    text-align: left;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.sub-dropbtn:hover {
+    background: #f2f2f2;
+}
+
+.sub-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    min-width: 230px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+}
+
+.sub-dropdown:hover .sub-dropdown-content {
+    display: block;
+}
+
+.sub-dropdown-content a {
+    display: block;
+    padding: 12px 18px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.sub-dropdown-content a:hover {
+    background: #f5f5f5;
 }
 
 /* ===========================
@@ -151,6 +210,47 @@ nav a:hover {
 
     .dropdown-content a {
         padding-left: 40px;
+    }
+}
+
+@media (max-width:768px) {
+
+    .sub-dropdown-content {
+        position: static;
+        display: none;
+        box-shadow: none;
+        background: #25502d;
+        width: 100%;
+    }
+
+    .sub-dropdown.active .sub-dropdown-content {
+        display: block;
+    }
+
+    .sub-dropdown-content a {
+        padding-left: 60px;
+        color: #25502d;
+    }
+
+    .sub-dropbtn {
+        background: #25502d;
+        color: #ffd54f;
+    }
+
+    .sub-dropbtn {
+        width: 100%;
+        background: transparent;
+        color: white;
+        border: none;
+        text-align: left;
+        padding: 15px 20px;
+    }
+
+    .sub-dropbtn:hover,
+    .sub-dropbtn:focus,
+    .sub-dropbtn:active {
+        background: rgba(255, 255, 255, .1);
+        color: #ffd54f;
     }
 }
 
@@ -287,6 +387,10 @@ section {
     font-family: "Lucida Handwriting", cursive;
     text-align: center;
     font-size: 40px;
+}
+
+.orgIMG {
+    width: 100%;
 }
 
 /* Cards */
@@ -602,6 +706,24 @@ footer {
 }
 
 .location-column img {
+    object-fit: cover;
+    /* or "contain" if you don't want any cropping */
+}
+
+/* POSTERS */
+.location-column-poster {
+    flex: 1;
+}
+
+.location-column-poster img,
+.location-column-poster iframe {
+    width: 90%;
+    display: block;
+    border: 0;
+    border-radius: 10px;
+}
+
+.location-column-poster img {
     object-fit: cover;
     /* or "contain" if you don't want any cropping */
 }

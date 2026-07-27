@@ -16,6 +16,16 @@ function setZoomControlsDisabled(isDisabled) {
     });
 }
 
+// NAVBAR
+document.querySelectorAll(".sub-dropbtn").forEach(btn => {
+    btn.addEventListener("click", function(e){
+        if(window.innerWidth <= 768){
+            e.preventDefault();
+            this.parentElement.classList.toggle("active");
+        }
+    });
+});
+
 // Updated toggleMenu function
 function toggleMenu() {
     const navUL = document.querySelector(".navUL");
