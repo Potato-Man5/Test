@@ -40,8 +40,8 @@ nav {
 }
 
 .logo h2 {
-    font-family: "Old English Text MT", "Gothic", serif !important;
-    font-size: 20px !important;
+    font-family: "Old English Text MT", "Gothic", serif;
+    font-size: 20px;
 }
 
 nav ul {
@@ -751,4 +751,25 @@ footer {
         width: 300px;
         height: auto;
     }
+}
+
+/* CAMPUS MAP */
+.campus-map-img {
+    width: 100%;
+    height: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: block;
+}
+
+.padding-right {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 40px !important;
+    margin-left: 48% !important;
+    text-align: right !important;
+    color: #2f5f36 !important;
+}
+
+.padding-bottom {
+    margin-bottom: 20px;
 }
