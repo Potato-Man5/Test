@@ -259,7 +259,7 @@ nav a:hover {
 
 .hero {
     height: 90vh;
-    background: url("../images/SPCM_School_Background.png") center/cover;
+    background: url("../images/SPCM_Background.png") center/cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -450,6 +450,14 @@ section {
 
 .message-text {
     flex: 1;
+}
+
+.justified-text {
+    text-align: justify;
+}
+
+.text-on-right {
+    text-align: right;
 }
 
 .message-text h2 {
@@ -1122,5 +1130,376 @@ details[open] > summary .accordion-icon::after {
 
     .building-preview img {
         height: 70px;
+    }
+}
+
+/* ===========================
+   TABS STYLING
+=========================== */
+
+.lab-main-section {
+    background-color: #ffffff !important;
+    padding: 50px 10%;
+}
+
+.lab-tabs-container {
+    width: 100%;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.lab-tabs-nav {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+}
+
+.lab-tab-btn {
+    background: #f2f2f2;
+    border: none;
+    border-bottom: 4px solid transparent;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2f5f36;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.lab-tab-btn:hover {
+    background: #2f5f36;
+    color: #ffde59;
+}
+
+.lab-tab-btn.active {
+    background: #2f5f36;
+    color: #ffde59;
+    border-bottom: 4px solid #ffde59;
+}
+
+.lab-tabs-divider {
+    width: 100%;
+    height: 3px;
+    background-color: #2f5f36;
+    position: relative;
+    top: -3px;
+    z-index: 1;
+}
+
+.lab-tab-content {
+    display: none;
+    background-color: #ffffff !important;
+    padding: 20px 0;
+    animation: labFadeIn 0.3s ease-in-out;
+}
+
+.lab-tab-content.active {
+    display: block;
+}
+
+.lab-tab-content h1 {
+    margin-bottom: 15px;
+}
+
+.lab-tab-content p {
+    color: #333333 !important;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+@keyframes labFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .lab-tabs-nav {
+        gap: 5px;
+    }
+    .lab-tab-btn {
+        width: 100%;
+        text-align: left;
+        border-radius: 4px;
+    }
+    .lab-tabs-divider {
+        display: none;
+    }
+}
+
+/* SWORD Meet the Scribes pop up */
+/* SWORD SCRIBES GALLERY */
+
+.sword-scribes-section {
+    padding: 70px 6%;
+}
+
+.sword-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    align-items: center;
+}
+
+.sword-gallery-img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.sword-gallery-img:hover {
+    transform: scale(1.03);
+}
+
+/* IMAGE POPUP */
+
+.sword-popup {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding: 40px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+}
+
+.sword-popup-content {
+    max-width: 90%;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    animation: swordZoom 0.3s ease;
+}
+
+.sword-popup-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 45px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.sword-popup-close:hover {
+    color: #ffde59;
+}
+
+@keyframes swordZoom {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .sword-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .sword-scribes-section {
+        padding: 35px 5%;
+    }
+
+    .sword-popup {
+        padding: 15px;
+    }
+
+    .sword-popup-content {
+        max-width: 100%;
+        max-height: 85vh;
+    }
+
+    .sword-popup-close {
+        top: 10px;
+        right: 20px;
+    }
+}
+
+
+/* ===========================
+   SCHOOL CLUBS SECTION
+=========================== */
+
+.school-clubs-section {
+    background: #ffde59;
+    padding: 45px 10%;
+}
+
+.school-clubs-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto 0;
+    padding: 45px 7%;
+    background-color: #ffffff;
+}
+
+/* TABS */
+
+.club-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.club-tab {
+    background: #f2f2f2 !important;
+    color: #2f5f36 !important;
+    border: none !important;
+    border-bottom: 5px solid transparent !important;
+    padding: 18px 30px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 12px 12px 0 0;
+}
+
+.club-tab.active {
+    background: #2f5f36 !important;
+    color: #ffde59 !important;
+    border-bottom: 5px solid #ffde59 !important;
+}
+
+/* TAB CONTENT */
+
+.club-tab-content {
+    display: none;
+    background-color: #ffffff !important;
+}
+
+.club-tab-content.active {
+    display: block;
+}
+
+.club-intro {
+    color: #222222 !important;
+    background: transparent !important;
+    text-align: center;
+    font-size: 17px;
+    margin: 10px 0 15px;
+    line-height: 1.8;
+}
+
+/* CLUB CARDS */
+
+.club-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f1f1f1 !important;
+    padding: 10px 40px 10px 25px;
+    margin: 15px 0;
+    min-height: 145px;
+    gap: 20px;
+    border: none !important;
+    border-bottom: none !important;
+}
+
+.club-info {
+    flex: 1;
+}
+
+.club-info h2 {
+    color: #222222 !important;
+    background: transparent !important;
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.club-info p {
+    color: #222222 !important;
+    background: transparent !important;
+    font-size: 20px;
+}
+
+/* CLUB LOGO */
+
+.club-logo {
+    width: 125px;
+    height: 125px;
+    min-width: 125px;
+    border-radius: 50%;
+    background: #cbd3dd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.club-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .school-clubs-section {
+        padding: 30px 5%;
+    }
+
+    .school-clubs-container {
+        padding: 25px 5%;
+    }
+
+    .club-tab {
+        font-size: 13px;
+        padding: 12px 10px;
+    }
+
+    .club-card {
+        padding: 12px;
+        min-height: 100px;
+    }
+
+    .club-info h2 {
+        font-size: 18px;
+    }
+
+    .club-info p {
+        font-size: 13px;
+    }
+
+    .club-logo {
+        width: 75px;
+        height: 75px;
+        min-width: 75px;
+    }
+
+    .club-intro {
+        font-size: 12px;
     }
 }
