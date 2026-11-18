@@ -132,3 +132,5 @@ function showClubTab(tabName, clickedButton) {
     // Highlight selected button
     clickedButton.classList.add('active');
 }
+
+// 
